@@ -16,59 +16,63 @@ import UserDetails from './Components/UserDetails/UserDetails.jsx';
 import Posts from './Components/Posts/Posts.jsx';
 import PostDetail from './Components/PostDetail/PostDetail.jsx';
 
-const usersPromise = fetch("https://jsonplaceholder.typicode.com/users").then(res=>res.json())
+const usersPromise = fetch("https://jsonplaceholder.typicode.com/users").then(res => res.json())
 
 const router = createBrowserRouter([
   {
-    path:"/",
+    path: "/",
     Component: Root,
-    children:[
-      { index:true, Component:Home},
-      {path:"mobiles", Component:Mobiles},
-      {path:"laptops", Component:Laptops},
-      {path:"desktop", Component:Desktop},
+    children: [
+      { index: true, Component: Home },
+      { path: "mobiles", Component: Mobiles },
+      { path: "laptops", Component: Laptops },
+      { path: "desktop", Component: Desktop },
       {
-        path:"users",
-        loader:()=>fetch('https://jsonplaceholder.typicode.com/users'),
-        Component:Users
+        path: "users",
+        loader: () => fetch('https://jsonplaceholder.typicode.com/users'),
+        Component: Users
       },
       {
-        path:"users2",
-        element:<Suspense fallback={<span>Loading......</span>}>
+        path: "users2",
+        element: <Suspense fallback={<span>Loading......</span>}>
           <Users2 usersPromise={usersPromise}></Users2>
         </Suspense>
       },
       {
-        path:"users/:userId",
-        loader:({params})=>fetch(`https://jsonplaceholder.typicode.com/users/${params.userId}`),
-        Component:UserDetails,
-  
+        path: "users/:userId",
+        loader: ({ params }) => fetch(`https://jsonplaceholder.typicode.com/users/${params.userId}`),
+        Component: UserDetails,
+
       },
       {
         path: "posts",
-        loader:()=>fetch(`https://jsonplaceholder.typicode.com/posts`),
-        Component:Posts
+        loader: () => fetch(`https://jsonplaceholder.typicode.com/posts`),
+        Component: Posts
       },
       {
-        path:"posts/:postsId",
-        loader:({params})=>fetch(`https://jsonplaceholder.typicode.com/posts/${params.postsId}`),
-        Component:PostDetail,
+        path: "posts/:postsId",
+        loader: ({ params }) => fetch(`https://jsonplaceholder.typicode.com/posts/${params.postsId}`),
+        Component: PostDetail,
       }
-      
+
     ]
   },
   {
-    path:"about",
+    path: "about",
     element: <div>About</div>
   },
-{
-  path: "blogs",
-  element: <div>Blogs</div>
-},
-{
-  path:"app",
-  Component: App
-}
+  {
+    path: "blogs",
+    element: <div>Blogs</div>
+  },
+  {
+    path: "app",
+    Component: App
+  },
+  {
+  path:'*',
+  element: <h3>Not Found : 404 Status</h3>
+  }
 
 ])
 
